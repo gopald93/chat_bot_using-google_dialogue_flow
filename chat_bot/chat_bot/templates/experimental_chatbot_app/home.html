@@ -1,0 +1,16 @@
+{% extends 'experimental_chatbot_app/krishna.html' %}
+{% load static %}
+{% block stylesheet %}
+{% endblock stylesheet %} 
+{% block content %}
+<form method="POST">
+	{{ formset.management_form }}
+	{% for form in formset %}  
+    {% csrf_token %} 
+    {{form.as_p }} 
+    {% endfor %}
+    <input type="submit" value="Submit"> 
+</form> 
+{% endblock %}
+{% block javascript %}
+{% endblock javascript %}

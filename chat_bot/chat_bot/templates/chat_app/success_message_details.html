@@ -1,0 +1,41 @@
+{% extends 'experimental_chatbot_app/krishna.html' %}
+{% block title %}All Message activities{% endblock %}
+{% block stylesheet %}
+{% endblock stylesheet %}
+{% block content %}
+<div class="container">
+<div class="row">
+   <div class="col-lg-12">
+      <div class="row justify-content-center">
+         <h1>Success Message activities</h1>
+      </div>
+      <div class="table-responsive" style="overflow-y: auto;overflow-x: auto;height:500px;width: 100%;">
+         <table id="userTable" class="table table-striped">
+           <thead>
+            <tr>
+               <th style="background-color:DodgerBlue;">Request</th>
+               <th style="background-color:DodgerBlue;">Response</th>
+               <th colspan="3" style="background-color:DodgerBlue;">Reply Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if message %} 
+            {% for message_obj in message %}
+            <tr>
+               <td class="userName userData" name="name">{{message_obj.statement.text}}</td>
+               <td class="userAddress userData" name="address">{{message_obj.response}}</td>
+               <td class="userAge userData" name="age">{{message_obj.reply_status}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+         </table>
+            {% else %}
+            <p>No Message</p>
+            {% endif %}
+      </div>
+   </div>
+</div>
+</div>
+{% endblock %}
+{% block javascript %}
+{% endblock javascript %}

@@ -1,0 +1,220 @@
+{% extends 'experimental_chatbot_app/krishna.html' %}
+ 
+ {% block stylesheet %}
+<style>
+    .button {
+        background-color: blue;
+        border: none;
+        color: white;
+        padding: 10px;
+        text-decoration: none;
+        font-size: 15px;
+        margin: 3px 3px;
+        cursor: pointer;
+        font-weight: bold;
+
+    }
+    .button5 {
+        border-radius: 10px;
+    }
+
+    #chatbox {
+        color: #228b22;
+        overflow-y:scroll;
+        height: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+
+    #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 97%;
+        height: 8%;
+        margin-top: 10px;
+    }
+
+    #textInput {
+        color: blue;
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: center;
+        border-radius: 10px;
+        font-weight: bold;
+        padding: 10px
+
+    }
+
+    .userText {
+        color: white;
+        font-family: monospace;
+        font-size: 15px;
+        text-align: right;
+        line-height: 20px;
+        margin-bottom: 30px;
+
+    }
+
+    .userText span {
+        padding: 12px;
+        color: #ffffff;
+        margin-right: 8px;
+        border-radius: 10px;
+        border: 2px solid blue;
+        line-height: 20px;
+        font-size: 15px;
+        font-style: oblique;
+
+
+
+    }
+
+    .botText {
+        font-family: monospace;
+        font-size: 15px;
+        text-align: left;
+        line-height: 30px;
+        font-style: oblique;
+        color: beige;
+        border: 2px solid white;
+        border-radius: 10px;
+        margin-right: 50px;
+        margin-top: 24px;
+        padding: 12px;
+        margin-left: 7px;
+        margin-bottom: 30px;
+
+    }
+
+    .botText span {
+        font-size: 15px;
+        line-height: 20px;
+
+    }
+
+    .chathead{
+
+              border: 4px solid #2f3f4e;
+              background-color: #2f3f4e;
+              color: white;
+              font-style: oblique;
+              height: 80px;
+              border-radius: 5px;
+          }
+
+  .chathead img{
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            float: left;
+            margin: 4px;
+
+
+          }
+
+  .chathead h4{
+            float: left;
+            margin-left: 10px;
+            margin-top: 16px;
+  }
+  .chathead span{
+            float: right;
+  }
+
+    .boxed {
+        overflow-y:auto;
+        background-color: black;
+        margin-bottom: auto;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        margin-top: 10px;
+        border: 8px solid black;
+        border-radius: 10px;
+
+    }
+
+    .box {
+
+        border: 2px solid black;
+    }
+
+
+</style>
+{% endblock stylesheet %} {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row justify-content-center">
+                <div class="boxed">
+                    <div class="chathead">
+                      <img src="https://www.whatsupmysuru.com/wp-content/uploads/2018/02/pepper-for-business-edition-humanoid-robot-2-years-warranty.jpg" alt="No image">
+                      <h4> <b>Modefin-BOT</b> </h4>
+                    </div>
+
+                    <div>
+                        <div id="chatbox" >
+                            <p class="botText">
+                                <span><b>Hi! I am Modefin-Bot, How may i help you?</b></span>
+                            </p>
+                        </div>
+                        <div id="userInput">
+                            <input id="textInput" type="text" name="msg" placeholder="Enter your text here......" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    {% endblock %} {% block javascript %}
+    <script type="text/javascript">
+        function getBotResponse(rawText_input) {
+            if (rawText_input == null) {
+                var rawText = $("#textInput").val();
+            } else {
+                var rawText = rawText_input;
+            }
+            var user_input_data = {
+                name: rawText,
+            };
+            var json_data = JSON.stringify(user_input_data);
+            var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+            $("#textInput").val("");
+            $("#chatbox").append(userHtml);
+            document.getElementById("userInput").scrollIntoView({
+                block: "start",
+                behavior: "smooth",
+            });
+            $.post('{% url "post_request_data" %}', json_data).done(function (data) {
+                var botHtml = '<p class="botText"><span>' + data.message.response + "<br>" + data.reach_messages_data + "</span></p>";
+                $("#chatbox").append(botHtml);
+                document.getElementById("userInput").scrollIntoView({
+                    block: "start",
+                    behavior: "smooth",
+                });
+            });
+        }
+
+        function callbuttonfunction(button_id_data) {
+            var button_value = document.getElementById(button_id_data).innerHTML;
+            getBotResponse(button_value);
+        }
+        $("#textInput").keypress(function (e) {
+            if (e.which == 13) {
+                getBotResponse();
+            }
+        });
+    </script>
+    {% endblock javascript %}

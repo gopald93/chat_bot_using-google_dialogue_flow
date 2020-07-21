@@ -1,0 +1,83 @@
+{% extends 'experimental_chatbot_app/krishna.html' %}
+{% load static %} 
+{% block stylesheet %}
+{% endblock stylesheet %} 
+{% block content %}
+<div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card" style="width: auto; height: auto;">
+      <div class="card-body">
+        <h5 class="card-title">Total Messages Activities</h5>
+        <div class="card-text">
+         <div id="total-number1" style="width: auto; height: auto;"></div> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card" style="width: auto; height: auto;">
+      <div class="card-body">
+        <h5 class="card-title">Total Different Messages Activities</h5>
+        <div class="card-text">
+        <div id="total-number2" style="width: auto; height: auto;"></div> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %} 
+
+{% block javascript %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+
+    google.charts.setOnLoadCallback(onegraph);
+    google.charts.setOnLoadCallback(threegraph);
+
+
+    function onegraph() {
+      var data = google.visualization.arrayToDataTable({{no_of_activities_json|safe}});
+
+      var options = {
+        title: 'Total Number of Messages',
+        hAxis: {title: 'DATE-TIME'},
+        vAxis: {title: 'No of Messages'},
+
+        lineWidth: 5,
+        series: {
+                    0: { color: '#FFFF00' }
+                },
+
+      };
+
+      var chart = new google.visualization.AreaChart(document.getElementById('total-number1'));
+      chart.draw(data, options);
+    }
+     function threegraph() {
+      var data = google.visualization.arrayToDataTable({{combined_list_for_all_activites_json|safe}});
+
+      var options = {
+        title: 'Total Number of Messages',
+        hAxis: {title: 'DATE-TIME'},
+        vAxis: {title: 'No of Messages'},
+
+        lineWidth: 1,
+        series: {
+                    0: { color: '#581845' },
+                    1: { color: '#34d613' },
+                    2: { color: '#ff0000' }
+                },
+
+      };
+      var chart = new google.visualization.LineChart(document.getElementById('total-number2'));
+      chart.draw(data, options);
+    }
+</script>
+{% endblock javascript %}
