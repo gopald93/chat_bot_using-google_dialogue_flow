@@ -5,7 +5,7 @@ chardet==3.0.4
 chatbotAI==0.2.1.1
 dialogflow==1.0.0
 Django==3.0.6
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 google-api-core==1.17.0
 google-auth==1.14.3
 googleapis-common-protos==1.51.0
