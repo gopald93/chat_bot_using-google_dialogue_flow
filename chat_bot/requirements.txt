@@ -4,7 +4,7 @@ certifi==2020.4.5.1
 chardet==3.0.4
 chatbotAI==0.2.1.1
 dialogflow==1.0.0
-Django==3.0.6
+Django==3.1.6
 djangorestframework==3.11.0
 google-api-core==1.17.0
 google-auth==1.14.3
